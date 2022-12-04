@@ -6,6 +6,7 @@ use App\Repository\WarehouseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WarehouseRepository::class)]
+// this is a test
 class Warehouse
 {
     #[ORM\Id]
