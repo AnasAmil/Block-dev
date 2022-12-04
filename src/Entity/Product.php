@@ -32,6 +32,9 @@ class Product
     #[ORM\Column]
     private ?int $cell_occupation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Warehouse $warehouse = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Product
     public function setCellOccupation(int $cell_occupation): self
     {
         $this->cell_occupation = $cell_occupation;
+
+        return $this;
+    }
+
+    public function getWarehouse(): ?Warehouse
+    {
+        return $this->warehouse;
+    }
+
+    public function setWarehouse(?Warehouse $warehouse): self
+    {
+        $this->warehouse = $warehouse;
 
         return $this;
     }
