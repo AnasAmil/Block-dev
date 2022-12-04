@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WarehouseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WarehouseRepository::class)]
@@ -24,6 +26,14 @@ class Warehouse
 
     #[ORM\Column]
     private ?int $max_cells = null;
+
+    #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Product::class)]
+    private Collection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,36 @@ class Warehouse
     public function setMaxCells(int $max_cells): self
     {
         $this->max_cells = $max_cells;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setWarehouse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getWarehouse() === $this) {
+                $product->setWarehouse(null);
+            }
+        }
 
         return $this;
     }
