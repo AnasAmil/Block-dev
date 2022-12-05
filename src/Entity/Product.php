@@ -25,7 +25,7 @@ class Product
 
     #[ORM\Column]
     private ?float $mass = null;
-
+    //  @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
