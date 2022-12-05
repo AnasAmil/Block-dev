@@ -30,6 +30,9 @@ class Warehouse
     #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wareHouseImage = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -114,6 +117,18 @@ class Warehouse
                 $product->setWarehouse(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWareHouseImage(): ?string
+    {
+        return $this->wareHouseImage;
+    }
+
+    public function setWareHouseImage(?string $wareHouseImage): self
+    {
+        $this->wareHouseImage = $wareHouseImage;
 
         return $this;
     }
