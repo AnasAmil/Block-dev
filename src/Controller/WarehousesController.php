@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Warehouse;
 use App\Repository\WarehouseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,10 +11,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class WarehousesController extends AbstractController
 {
     #[Route('/api/warehouses', name: 'app_warehouses', methods: ['GET'])]
-    public function index(WarehouseRepository $warehouseRepository, NormalizerInterface $normalizer): JsonResponse
+    public function index(WarehouseRepository $warehouseRepository): JsonResponse
     {
         $warehouses = $warehouseRepository->findAll();
-        
         return $this->json($warehouses, 200, [], ['groups' => 'show_warehouses']);
 
     }
