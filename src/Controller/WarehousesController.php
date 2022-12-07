@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Warehouse;
+use App\Repository\WarehouseRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,11 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class WarehousesController extends AbstractController
 {
     #[Route('/api/warehouses', name: 'app_warehouses', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(WarehouseRepository $warehouseRepository): JsonResponse
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/WarehousesController.php',
-        ]);
+        $warehouses = $warehouseRepository->findAll();
+        return $this->json($warehouses, 200, [], ['groups' => 'show_warehouses']);
     }
 }

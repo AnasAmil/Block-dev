@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -12,24 +13,31 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('show_warehouses')]
     private ?string $product_name = null;
 
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?int $quantity = null;
 
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?float $price_unit = null;
 
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?float $mass = null;
     //  @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups('show_warehouses')]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?int $cell_occupation = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]

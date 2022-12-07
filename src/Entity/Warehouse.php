@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\WarehouseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WarehouseRepository::class)]
@@ -13,24 +14,31 @@ class Warehouse
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('show_warehouses')]
     private ?string $warehouse_name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('show_warehouses')]
     private ?string $location = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups('show_warehouses')]
     private ?string $phone_number = null;
 
     #[ORM\Column]
+    #[Groups('show_warehouses')]
     private ?int $max_cells = null;
 
     #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Product::class)]
+    #[Groups('show_warehouses')]
     private Collection $products;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('show_warehouses')]
     private ?string $wareHouseImage = null;
 
     public function __construct()
