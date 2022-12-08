@@ -20,7 +20,7 @@ class Warehouse
     #[ORM\Column(length: 255)]
     #[Groups('show_warehouses')]
     private ?string $warehouse_name = null;
-
+    
     #[ORM\Column(length: 255)]
     #[Groups('show_warehouses')]
     private ?string $location = null;
@@ -33,13 +33,14 @@ class Warehouse
     #[Groups('show_warehouses')]
     private ?int $max_cells = null;
 
-    #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Product::class)]
-    // #[Groups('show_warehouses')]
-    private Collection $products;
-
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('show_warehouses')]
+    // #[Groups('show_warehouses', 'show_products')]
+    #[Groups('show_products', 'show_warehouses')]
     private ?string $wareHouseImage = null;
+
+    #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Product::class)]
+    #[Groups('show_warehouses')]
+    private Collection $products;
 
     public function __construct()
     {

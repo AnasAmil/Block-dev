@@ -9,12 +9,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductsController extends AbstractController
 {
-    #[Route('/api/products')]
-    public function index(ProductRepository $productRepository): JsonResponse
+    private $productRepository;
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;   
+    }
+
+    #[Route('/api/products', name : 'products', methods: ['GET'])]
+    public function index(): JsonResponse
     {
 
-        $products = $productRepository->findAll();
-        return $this->json($products, 200, [], ['groups' => 'show_products']);
+        $Allproducts = $this->productRepository->findAll();
+        return $this->json($Allproducts, 200, [], ['groups' => 'show_products', 'groups' => 'show_warehouses']);
 
     }
+
+    #[Route('/api/products/{id}', name : 'products_id', methods: ['GET'])]
+    public function show($id): JsonResponse
+    {
+
+        $productsFoundByid = $this->productRepository->find($id);
+        return $this->json($productsFoundByid, 200, [], ['groups' => 'show_products', 'groups' => 'show_warehouses']);
+    }
+
 }
